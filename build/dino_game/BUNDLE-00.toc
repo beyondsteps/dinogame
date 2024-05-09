@@ -1,0 +1,3 @@
+([('dino_game',
+   '/Users/eom-ij/Desktop/pythongame/dist/dino_game',
+   'EXECUTABLE')],)
