@@ -31,6 +31,11 @@ CLOUD = pygame.image.load(os.path.join("./Other", "Cloud.png"))
 BG = pygame.image.load(os.path.join("./Other", "Track.png"))
 
 
+##코인 추가
+COIN = [pygame.image.load(os.path.join("./Coin", "coin_bronze_1.png")),
+        pygame.image.load(os.path.join("./Coin", "coin_bronze_2.png"))]
+
+
 class Dinosaur:
     X_POS = 80
     Y_POS = 310
@@ -163,6 +168,33 @@ class Bird(Obstacle):
         self.index += 1
 
 
+
+## 코인 클래스 추가
+
+class Coin:
+    def __init__(self);
+        self.x = SCREEN_WIDTH + random.randint(600, 800)  # 코인의 시작 위치 설정
+        self.y = random.randint(150, 300)
+        self.image = COIN
+        self.index = 0
+        self.rect = self.image[self.index].get_rect()
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+    def update(self):
+        self.rect.x -= game_speed  # 코인이 왼쪽으로 이동하도록 설정
+        if self.rect.x < -self.rect.width:
+            self.rect.x = SCREEN_WIDTH + random.randint(600, 800)
+            self.rect.y = random.randint(150, 300)  # 코인이 화면 밖으로 나가면 위치 재설정
+        self.index += 1
+        self.index %= len(self.image)  # 이미지 인덱스 업데이트 (애니메이션 효과)
+
+    def draw(self, SCREEN):
+        SCREEN.blit(self.image[self.index // 5], self.rect)  # 화면에 코인 이미지 그리기
+
+
+
+
 def main():
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles
     run = True
@@ -176,12 +208,23 @@ def main():
     font = pygame.font.Font('freesansbold.ttf', 20)
     obstacles = []
     death_count = 0
-    
+    coin = Coin()  # main 함수 내에서 코인 객체 생성
+    ## 코인객체
+
     def score():
         global points, game_speed
         points += 1
         if points % 100 == 0:
             game_speed += 1
+
+    coin.draw(SCREEN)
+    coin.update()
+    
+    # 코인과 공룡이 충돌하는지 체크
+    if player.dino_rect.colliderect(coin.rect):
+        points += 100  # 점수 추가
+        coin.rect.x = SCREEN_WIDTH + random.randint(600, 800)  # 코인 위치 재설정
+
 
         text = font.render("Points: " + str(points), True, (0, 0, 0))
         textRect = text.get_rect()
