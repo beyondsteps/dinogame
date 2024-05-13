@@ -10,30 +10,30 @@ SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 1100
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-RUNNING = [pygame.image.load(os.path.join("./Dino", "DinoRun1.png")),
-           pygame.image.load(os.path.join("./Dino", "DinoRun2.png"))]
-JUMPING = pygame.image.load(os.path.join("./Dino", "DinoJump.png"))
-DUCKING = [pygame.image.load(os.path.join("./Dino", "DinoDuck1.png")),
-           pygame.image.load(os.path.join("./Dino", "DinoDuck2.png"))]
+RUNNING = [pygame.image.load(os.path.join("Assets/Dino", "DinoRun1.png")),
+           pygame.image.load(os.path.join("Assets/Dino", "DinoRun2.png"))]
+JUMPING = pygame.image.load(os.path.join("Assets/Dino", "DinoJump.png"))
+DUCKING = [pygame.image.load(os.path.join("Assets/Dino", "DinoDuck1.png")),
+           pygame.image.load(os.path.join("Assets/Dino", "DinoDuck2.png"))]
 
 
-SMALL_CACTUS = [pygame.image.load(os.path.join("./Cactus", "SmallCactus1.png")),
-                pygame.image.load(os.path.join("./Cactus", "SmallCactus2.png")),
-                pygame.image.load(os.path.join("./Cactus", "SmallCactus3.png"))]
-LARGE_CACTUS = [pygame.image.load(os.path.join("./Cactus", "LargeCactus1.png")),
-                pygame.image.load(os.path.join("./Cactus", "LargeCactus2.png")),
-                pygame.image.load(os.path.join("./Cactus", "LargeCactus3.png"))]
+SMALL_CACTUS = [pygame.image.load(os.path.join("Assets/Cactus", "SmallCactus1.png")),
+                pygame.image.load(os.path.join("Assets/Cactus", "SmallCactus2.png")),
+                pygame.image.load(os.path.join("Assets/Cactus", "SmallCactus3.png"))]
+LARGE_CACTUS = [pygame.image.load(os.path.join("Assets/Cactus", "LargeCactus1.png")),
+                pygame.image.load(os.path.join("Assets/Cactus", "LargeCactus2.png")),
+                pygame.image.load(os.path.join("Assets/Cactus", "LargeCactus3.png"))]
 
 
-BIRD = [pygame.image.load(os.path.join("./Bird", "Bird1.png")),
-        pygame.image.load(os.path.join("./Bird", "Bird2.png"))]
-CLOUD = pygame.image.load(os.path.join("./Other", "Cloud.png"))
-BG = pygame.image.load(os.path.join("./Other", "Track.png"))
+BIRD = [pygame.image.load(os.path.join("Assets/Bird", "Bird1.png")),
+        pygame.image.load(os.path.join("Assets/Bird", "Bird2.png"))]
+CLOUD = pygame.image.load(os.path.join("Assets/Other", "Cloud.png"))
+BG = pygame.image.load(os.path.join("Assets/Other", "Track.png"))
 
 
 ##코인 추가
-COIN = [pygame.image.load(os.path.join("./Coin", "coin_bronze_1.png")),
-        pygame.image.load(os.path.join("./Coin", "coin_bronze_2.png"))]
+COIN = [pygame.image.load(os.path.join("Assets/Coin", "coin_bronze_1.png")),
+        pygame.image.load(os.path.join("Assets/Coin", "coin_bronze_2.png"))]
 
 
 class Dinosaur:
@@ -171,26 +171,26 @@ class Bird(Obstacle):
 
 ## 코인 클래스 추가
 
-class Coin:
-    def __init__(self);
-        self.x = SCREEN_WIDTH + random.randint(600, 800)  # 코인의 시작 위치 설정
-        self.y = random.randint(150, 300)
-        self.image = COIN
-        self.index = 0
-        self.rect = self.image[self.index].get_rect()
-        self.rect.x = self.x
-        self.rect.y = self.y
-
-    def update(self):
-        self.rect.x -= game_speed  # 코인이 왼쪽으로 이동하도록 설정
-        if self.rect.x < -self.rect.width:
-            self.rect.x = SCREEN_WIDTH + random.randint(600, 800)
-            self.rect.y = random.randint(150, 300)  # 코인이 화면 밖으로 나가면 위치 재설정
-        self.index += 1
-        self.index %= len(self.image)  # 이미지 인덱스 업데이트 (애니메이션 효과)
-
-    def draw(self, SCREEN):
-        SCREEN.blit(self.image[self.index // 5], self.rect)  # 화면에 코인 이미지 그리기
+# class Coin:
+#     def __init__(self):
+#         self.x = SCREEN_WIDTH + random.randint(600, 800)  # 코인의 시작 위치 설정
+#         self.y = random.randint(150, 300)
+#         self.image = COIN
+#         self.index = 0
+#         self.rect = self.image[self.index].get_rect()
+#         self.rect.x = self.x
+#         self.rect.y = self.y
+# 
+#     def update(self):
+#         self.rect.x -= game_speed  # 코인이 왼쪽으로 이동하도록 설정
+#         if self.rect.x < -self.rect.width:
+#             self.rect.x = SCREEN_WIDTH + random.randint(600, 800)
+#             self.rect.y = random.randint(150, 300)  # 코인이 화면 밖으로 나가면 위치 재설정
+#         self.index += 1
+#         self.index %= len(self.image)  # 이미지 인덱스 업데이트 (애니메이션 효과)
+# 
+#     def draw(self, SCREEN):
+#         SCREEN.blit(self.image[self.index // 5], self.rect)  # 화면에 코인 이미지 그리기
 
 
 
@@ -208,7 +208,7 @@ def main():
     font = pygame.font.Font('freesansbold.ttf', 20)
     obstacles = []
     death_count = 0
-    coin = Coin()  # main 함수 내에서 코인 객체 생성
+#    coin = Coin()  # main 함수 내에서 코인 객체 생성
     ## 코인객체
 
     def score():
@@ -217,19 +217,19 @@ def main():
         if points % 100 == 0:
             game_speed += 1
 
-    coin.draw(SCREEN)
-    coin.update()
+#    coin.draw(SCREEN)
+#    coin.update()
     
-    # 코인과 공룡이 충돌하는지 체크
-    if player.dino_rect.colliderect(coin.rect):
-        points += 100  # 점수 추가
-        coin.rect.x = SCREEN_WIDTH + random.randint(600, 800)  # 코인 위치 재설정
-
-
-        text = font.render("Points: " + str(points), True, (0, 0, 0))
-        textRect = text.get_rect()
-        textRect.center = (1000, 40)
-        SCREEN.blit(text, textRect)
+#   # 코인과 공룡이 충돌하는지 체크
+#   if player.dino_rect.colliderect(coin.rect):
+#       points += 100  # 점수 추가
+#       coin.rect.x = SCREEN_WIDTH + random.randint(600, 800)  # 코인 위치 재설정
+#
+#
+#       text = font.render("Points: " + str(points), True, (0, 0, 0))
+#       textRect = text.get_rect()
+#       textRect.center = (1000, 40)
+#       SCREEN.blit(text, textRect)
 
     def background():
         global x_pos_bg, y_pos_bg
